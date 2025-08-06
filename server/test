@@ -1,4 +1,0 @@
-curl -X POST http://localhost:5000/api/inventory \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OTNiNWYzZDc0YTE2YzQwNWQ0ODQ4ZSIsInJvbGUiOiJEZXB0SGVhZCIsImlhdCI6MTc1NDUxMTA3MiwiZXhwIjoxNzU0NTk3NDcyfQ.J37YEqhJxVnVtsIsK2G3EK-w6wBzYuSUiNMSAhx_Ygg" \
-  -d '{"item": "Laptop", "quantity": 5}'
