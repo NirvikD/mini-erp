@@ -1,0 +1,17 @@
+# Server-side ignores
+server/node_modules/
+server/.env
+server/*.bundle
+server/logs/
+server/coverage/
+
+# General ignores
+.env
+*.log
+*.bundle
+.DS_Store
+Thumbs.db
+
+# Editor/workspace files
+.vscode/
+.idea/
