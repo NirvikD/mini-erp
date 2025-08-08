@@ -1,10 +1,27 @@
+// /server/models/Requisition.js
 const mongoose = require('mongoose');
 
-const requisitionSchema = new mongoose.Schema({
-  item: String,
-  quantity: Number,
-  status: { type: String, default: 'Pending' }, // 'Fulfilled', 'Needs Procurement'
-  requestedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+const RequisitionSchema = new mongoose.Schema({
+  item: {
+    type: String,
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ['Pending', 'Fulfilled', 'Needs Procurement', 'Approved', 'Rejected'],
+    default: 'Pending',
+  },
+  requestedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+}, {
+  timestamps: true,
 });
 
-module.exports = mongoose.model('Requisition', requisitionSchema);
+module.exports = mongoose.model('Requisition', RequisitionSchema);
