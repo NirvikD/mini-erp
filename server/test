@@ -1,0 +1,58 @@
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OTNiNWYzZDc0YTE2YzQwNWQ0ODQ4ZSIsInJvbGUiOiJEZXB0SGVhZCIsImlhdCI6MTc1NDU3NDAxOSwiZXhwIjoxNzU0NjYwNDE5fQ.AeZcfxxS-Jl0ZHgdCeZkQpIDTSilNYkfsBptrTSGuEg
+
+curl -X POST http://localhost:5000/api/inventory \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OTNiNWYzZDc0YTE2YzQwNWQ0ODQ4ZSIsInJvbGUiOiJEZXB0SGVhZCIsImlhdCI6MTc1NDU3NDAxOSwiZXhwIjoxNzU0NjYwNDE5fQ.AeZcfxxS-Jl0ZHgdCeZkQpIDTSilNYkfsBptrTSGuEg" \
+  -d '{"item": "Laptop", "quantity": 5}'
+
+
+curl -X POST \
+  http://localhost:5000/api/auth/register \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Josh Hazelwood",
+    "email": "josh.hazelwood@example.com",
+    "password": "josh1234",
+    "role": "ProcurementOfficer"
+}'
+
+{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OTRiOTAyNmNhMDE1MTRkYzhlMDY3NCIsInJvbGUiOiJEZXB0SGVhZCIsImlhdCI6MTc1NDU3NzE1NCwiZXhwIjoxNzU0NjYzNTU0fQ.YRMC5q4KaKZeGI6vprDPLJ1-HdeP-zhugEN7pfmVLcc","role":"DeptHead"}
+
+{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OTRiOTAyNmNhMDE1MTRkYzhlMDY3NCIsInJvbGUiOiJEZXB0SGVhZCIsImlhdCI6MTc1NDU3NzI2NywiZXhwIjoxNzU0NjYzNjY3fQ.toQ9n5wDNtUhAYdLfakHHYROxnHV02jZhnSezUcHC9Q","role":"DeptHead"}
+
+curl -X GET \
+  http://localhost:5000/api/inventory \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OTRiOTAyNmNhMDE1MTRkYzhlMDY3NCIsInJvbGUiOiJEZXB0SGVhZCIsImlhdCI6MTc1NDU3NzI2NywiZXhwIjoxNzU0NjYzNjY3fQ.toQ9n5wDNtUhAYdLfakHHYROxnHV02jZhnSezUcHC9Q'
+
+
+{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OTRjYWYwMmMyMTU3NmZiNGIyNTFiYyIsInJvbGUiOiJQcm9jdXJlbWVudE9mZmljZXIiLCJpYXQiOjE3NTQ1ODE3NDUsImV4cCI6MTc1NDY2ODE0NX0.Add7pCisnm7REwv2en3XvrfjtECvfkUdbb-4aq0MjL0","role":"ProcurementOfficer"}
+
+curl -X POST \
+  http://localhost:5000/api/inventory/add \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OTRjYWYwMmMyMTU3NmZiNGIyNTFiYyIsInJvbGUiOiJQcm9jdXJlbWVudE9mZmljZXIiLCJpYXQiOjE3NTQ1ODE3NDUsImV4cCI6MTc1NDY2ODE0NX0.Add7pCisnm7REwv2en3XvrfjtECvfkUdbb-4aq0MjL0' \
+  -d '{
+    "item": "Paper A4",
+    "quantity": 50
+}'
+
+
+# Replace <YOUR_TOKEN_HERE> and adjust item/quantity as needed
+curl -X POST \
+  http://localhost:5000/api/requisition \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OTRiOTAyNmNhMDE1MTRkYzhlMDY3NCIsInJvbGUiOiJEZXB0SGVhZCIsImlhdCI6MTc1NDU3NzI2NywiZXhwIjoxNzU0NjYzNjY3fQ.toQ9n5wDNtUhAYdLfakHHYROxnHV02jZhnSezUcHC9Q" \
+  -d '{
+    "item": "Chair",
+    "quantity": 10
+  }'
+
+# Replace <YOUR_TOKEN_HERE>
+curl -X GET \
+  http://localhost:5000/api/requisition/my-requisitions \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OTRiOTAyNmNhMDE1MTRkYzhlMDY3NCIsInJvbGUiOiJEZXB0SGVhZCIsImlhdCI6MTc1NDU3NzI2NywiZXhwIjoxNzU0NjYzNjY3fQ.toQ9n5wDNtUhAYdLfakHHYROxnHV02jZhnSezUcHC9Q"
+
+# Replace <YOUR_PROCURMENT_OFFICER_TOKEN_HERE>
+curl -X GET \
+  http://localhost:5000/api/requisition/all \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OTRjYWYwMmMyMTU3NmZiNGIyNTFiYyIsInJvbGUiOiJQcm9jdXJlbWVudE9mZmljZXIiLCJpYXQiOjE3NTQ1ODE3NDUsImV4cCI6MTc1NDY2ODE0NX0.Add7pCisnm7REwv2en3XvrfjtECvfkUdbb-4aq0MjL0"
