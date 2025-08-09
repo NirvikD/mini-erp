@@ -5,7 +5,8 @@ server/*.bundle
 server/logs/
 server/coverage/
 server/dist/
-server/test/
+server/test.txt
+server/seed.js
 # General ignores
 .env
 *.log
