@@ -27,3 +27,4 @@ const inventorySchema = new mongoose.Schema({
 }, { timestamps: true }); // Automatically adds createdAt and updatedAt fields
 
 module.exports = mongoose.model('Inventory', inventorySchema);
+// This model represents the inventory items in the system, including their quantities and thresholds for low stock.

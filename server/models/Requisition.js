@@ -25,3 +25,4 @@ const RequisitionSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Requisition', RequisitionSchema);
+// This model represents the requisitions made by users for items needed in the organization.

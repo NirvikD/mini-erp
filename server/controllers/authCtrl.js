@@ -11,21 +11,6 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // ⚠️ TEMPORARY FOR TESTING: Create a test Procurement Officer user if it doesn't exist.
-    // This allows you to get a token for testing protected routes.
-    if (email === 'test.procurement@example.com' && password === 'testpassword123') {
-      let testUser = await User.findOne({ email });
-      if (!testUser) {
-        testUser = await User.create({
-          name: 'Test Officer',
-          email: 'test.procurement@example.com',
-          password: 'testpassword123',
-          role: 'ProcurementOfficer'
-        });
-        console.log('Test ProcurementOfficer created!');
-      }
-    }
-
     // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
