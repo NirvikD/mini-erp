@@ -1,3 +1,4 @@
+// server/routes/reqRoutes.js
 const express = require('express');
 const { createRequisition, getMyRequisitions, getAllRequisitions, updateRequisitionStatus } = require('../controllers/reqCtrl');
 const { protect, authorize } = require('../middlewares/authMiddleware');

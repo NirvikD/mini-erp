@@ -39,3 +39,4 @@ const RFQSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('RFQ', RFQSchema);
+// This model represents the RFQs created by users for specific requisitions and vendors.

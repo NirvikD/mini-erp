@@ -45,3 +45,4 @@ const VendorQuoteSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('VendorQuote', VendorQuoteSchema);
+// This model represents the quotes submitted by vendors in response to RFQs, including details about the items and pricing.

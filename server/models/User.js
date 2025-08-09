@@ -29,3 +29,4 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 };
 
 module.exports = mongoose.model('User', userSchema);
+// This model represents the users in the system, including procurement officers and vendors.
