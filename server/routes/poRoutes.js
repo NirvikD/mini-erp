@@ -12,12 +12,12 @@ const {
 // @desc    Create a new Purchase Order from an awarded quote
 // @route   POST /api/po
 // @access  Procurement Only
-router.post('/', protect, authorize('Procurement Officer'), createPurchaseOrder);
+router.post('/', protect, authorize('ProcurementOfficer'), createPurchaseOrder);
 
 // @desc    Mark a Purchase Order as delivered (Goods Receipt)
 // @route   PUT /api/po/:id/goods-received
 // @access  Procurement Only
-router.put('/:id/goods-received', protect, authorize('Procurement Officer'), markGoodsReceived);
+router.put('/:id/goods-received', protect, authorize('ProcurementOfficer'), markGoodsReceived);
 
 // @desc    Get a single Purchase Order by ID
 // @route   GET /api/po/:id
