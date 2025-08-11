@@ -1,11 +1,17 @@
+// server/controllers/authCtrl.js
+
+// Import necessary libraries and models
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs'); // You will need this for the login function
+const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
+// Import the JWT configuration file to centralize token settings
+const jwtConfig = require('../config/jwtConfig'); 
+
 /**
- * @desc    Authenticates a user and generates a JWT token
- * @route   POST /api/auth/login
- * @access  Public
+ * @desc    Authenticates a user and generates a JWT token
+ * @route   POST /api/auth/login
+ * @access  Public
  */
 exports.login = async (req, res) => {
   const { email, password } = req.body;
@@ -28,8 +34,8 @@ exports.login = async (req, res) => {
     // Sign a new JWT with user id and role
     const token = jwt.sign(
       { id: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: '1d' }
+      jwtConfig.secret, // <-- Using the secret from jwtConfig
+      { expiresIn: jwtConfig.expiresIn } // <-- Using the expiration from jwtConfig
     );
 
     res.json({ token, role: user.role });
@@ -41,14 +47,14 @@ exports.login = async (req, res) => {
 };
 
 /**
- * @desc    Registers a new user and generates a JWT token
- * @route   POST /api/auth/register
- * @access  Public
+ * @desc    Registers a new user and generates a JWT token
+ * @route   POST /api/auth/register
+ * @access  Public
  */
 exports.register = async (req, res) => {
-  // Use a more secure approach by always defaulting the role
+  // For security, hardcode the role for a new user
   const { name, email, password } = req.body;
-  const role = 'DeptHead'; // Hardcode the role for security
+  const role = 'DeptHead';
 
   try {
     // Check if user already exists
@@ -58,15 +64,14 @@ exports.register = async (req, res) => {
     }
 
     // Create a new user. The password will be hashed automatically
-    // by the pre-save hook in the User model.
     const newUser = new User({ name, email, password, role });
     await newUser.save();
 
     // Sign JWT
     const token = jwt.sign(
       { id: newUser._id, role: newUser.role },
-      process.env.JWT_SECRET,
-      { expiresIn: '1d' }
+      jwtConfig.secret, // <-- Using the secret from jwtConfig
+      { expiresIn: jwtConfig.expiresIn } // <-- Using the expiration from jwtConfig
     );
 
     res.status(201).json({ token, role: newUser.role });

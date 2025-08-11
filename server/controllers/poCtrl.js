@@ -1,10 +1,11 @@
 // server/controllers/poCtrl.js
 const PurchaseOrder = require('../models/PurchaseOrder');
 const VendorQuote = require('../models/VendorQuote');
+const poService = require('../services/poService'); // Import the poService
 
-// @desc    Create a new Purchase Order from an awarded quote
-// @route   POST /api/po
-// @access  Procurement Only
+// @desc    Create a new Purchase Order from an awarded quote
+// @route   POST /api/po
+// @access  Procurement Only
 const createPurchaseOrder = async (req, res) => {
     try {
         const { quoteId } = req.body;
@@ -24,7 +25,7 @@ const createPurchaseOrder = async (req, res) => {
             procurementOfficer: procurementOfficerId,
             items: awardedQuote.quoteItems.map(item => ({
                 item: item.item,
-                quantity: item.quantity, // Assuming quoteItems will have a quantity field
+                quantity: item.quantity,
                 pricePerUnit: item.pricePerUnit,
                 totalPrice: item.totalPrice,
             })),
@@ -38,39 +39,26 @@ const createPurchaseOrder = async (req, res) => {
     }
 };
 
-// @desc    Mark a Purchase Order as delivered (Goods Receipt)
-// @route   PUT /api/po/:id/goods-received
-// @access  Procurement Only
+// @desc    Mark a Purchase Order as delivered (Goods Receipt)
+// @route   PUT /api/po/:id/goods-received
+// @access  Procurement Only
 const markGoodsReceived = async (req, res) => {
     try {
         const { id } = req.params;
-        const po = await PurchaseOrder.findById(id);
-
-        if (!po) {
-            return res.status(404).json({ msg: 'Purchase Order not found' });
-        }
-
-        // Check if the PO is already delivered
-        if (po.isGoodsReceived) {
-            return res.status(400).json({ msg: 'Goods already marked as received' });
-        }
-
-        po.isGoodsReceived = true;
-        po.status = 'Delivered';
-        po.deliveryDate = new Date();
-
-        await po.save();
-        res.status(200).json({ msg: 'Goods receipt confirmed', po });
+        const { deliveredQuantities } = req.body;
         
-        // TODO: Implement logic here to update Inventory and auto-deduct any allocated reqs
+        // Call the service function to handle the goods receipt logic
+        const updatedPO = await poService.recordGoodsReceipt(id, deliveredQuantities);
+
+        res.status(200).json({ msg: 'Goods receipt confirmed', po: updatedPO });
     } catch (error) {
         res.status(500).json({ msg: 'Server error', error: error.message });
     }
 };
 
-// @desc    Get a single Purchase Order by ID
-// @route   GET /api/po/:id
-// @access  Procurement, Vendor
+// @desc    Get a single Purchase Order by ID
+// @route   GET /api/po/:id
+// @access  Procurement, Vendor
 const getPurchaseOrderById = async (req, res) => {
     try {
         const po = await PurchaseOrder.findById(req.params.id)
@@ -92,9 +80,9 @@ const getPurchaseOrderById = async (req, res) => {
     }
 };
 
-// @desc    Get all Purchase Orders for a specific vendor
-// @route   GET /api/po/vendor/:vendorId
-// @access  Procurement, Vendor
+// @desc    Get all Purchase Orders for a specific vendor
+// @route   GET /api/po/vendor/:vendorId
+// @access  Procurement, Vendor
 const getPurchaseOrdersForVendor = async (req, res) => {
     try {
         const { vendorId } = req.params;

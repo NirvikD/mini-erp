@@ -15,24 +15,24 @@ router.post('/', protect, authorize('Vendor'), submitQuote);
 // @route GET /api/quotes/rfq/:rfqId
 // @access Procurement Only
 // We use the authorize factory with the 'Procurement Officer' role
-router.get('/rfq/:rfqId', protect, authorize('Procurement Officer'), getQuotesForRfq);
+router.get('/rfq/:rfqId', protect, authorize('ProcurementOfficer'), getQuotesForRfq);
 
 // @desc   Get a single quote by ID
 // @route GET /api/quotes/:id
 // @access Procurement Only
 // We use the authorize factory with the 'Procurement Officer' role
-router.get('/:id', protect, authorize('Procurement Officer'), getQuoteById);
+router.get('/:id', protect, authorize('ProcurementOfficer'), getQuoteById);
 
 // @desc   Award a specific quote
 // @route PUT /api/quotes/award/:id
 // @access Procurement Only
 // We use the authorize factory with the 'Procurement Officer' role
-router.put('/award/:id', protect, authorize('Procurement Officer'), awardQuote);
+router.put('/award/:id', protect, authorize('ProcurementOfficer'), awardQuote);
 
 // @desc   Reject a specific quote
 // @route PUT /api/quotes/reject/:id
 // @access Procurement Only
 // We use the authorize factory with the 'Procurement Officer' role
-router.put('/reject/:id', protect, authorize('Procurement Officer'), rejectQuote);
+router.put('/reject/:id', protect, authorize('ProcurementOfficer'), rejectQuote);
 
 module.exports = router;
